@@ -1,0 +1,61 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+    <h3>{{listing.title}}</h3>
+    <hr>
+    <p>{{listing.description}}</p>
+    {% if listing.active %}
+        <p>Current Price: ${{listing.current_price}}</p>
+    {% endif %}
+    <img src="{{listing.image}}" style="height: 250px; width: 250px;">
+    <p>Posted by {{listing.user_id}}</p>
+    <p>Created at {{listing.created_dtm}}</p>
+    {% if user.is_authenticated and listing.active %}
+        {% if not watchlist %}
+            <a href="{% url 'addwatchlist' listing.id %}">Add to Watchlist</a>
+        {% else %}
+            <a href="{% url 'removewatchlist' listing.id %}">Remove from Watchlist</a>
+        {% endif %}
+        <hr>
+        {% if close %}
+            <a href="{% url 'closelisting' listing.id%}">Close Auction</a>
+        {% endif %}
+    {% endif %}
+    <hr>
+    {% if listing.active %}
+        <h5>Highest Bidder</h5>
+        <strong>{{listing.current_winner}}</strong>
+        <p>Bid: ${{listing.current_price}}</p>
+    {% else %}
+        <h5>Auction Winner</h5>
+        <strong>{{listing.current_winner}}</strong>
+        <p>Bid: ${{listing.current_price}}</p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        {% if bidform %}
+            <form action="{% url 'listing' listing.id %}" method="POST">
+                {% csrf_token %}
+                {{bidform}}
+                <input type="submit" class="btn btn-primary">
+            </form>
+        {% endif %}
+    {% endif %}
+    <hr>
+    <h4>Comments</h4>
+    {% for comment in comments %}
+        <strong>{{comment.user_id}}</strong>
+        <p>{{comment.comment}}</p>
+    {% empty %}
+        <p>No Comments.</p>
+    {% endfor %}
+    {% if user.is_authenticated %}
+        {% if commentform %}
+        <form action="{% url 'addcomment' listing.id %}" method="POST">
+            {% csrf_token %}
+            {{commentform}}
+            <input type="submit" class="btn btn-primary">
+        </form>
+        {% endif %}
+    {% endif %}
+    <hr>
+{% endblock %}
