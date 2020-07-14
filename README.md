@@ -2,8 +2,6 @@
 
 Django Commerce is a Web Application built using Django which is similar to e-bay style auction that allow users to post auction listings, place bids on listings, comment on those listings, and add listings to a watchlist.
 
-![Commerce] (resources/img/commerce1.jpg?raw=true)
-
 #### Active Listings
 
 When a user visits `/` route, they can view all the currently active listings. For each of these listings, if a user clicks on any one of them, they will be redirected to that individual listing's page.
@@ -25,8 +23,6 @@ Clicking on the title of any listing takes the user to that specific listing's p
 * `close` a listing if they are the owner of that listing. Doing so will make the highest bidder the winner for the auction. Once the listing is closed, it can be viewed in the `/inactive` route.
 * View the winner for an auction on a closed listing.
 * View as well as add comments on a listing.
-
-![Listing] (resources/img/commerce2.jpg?raw=true)
 
 #### Categories
 
